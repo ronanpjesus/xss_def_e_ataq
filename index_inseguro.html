@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Teste de XSS</title>
+</head>
+<body>
+  <h1>Teste de XSS</h1>
+  <form id="xssForm">
+    <label for="userInput">Digite algo:</label> 
+    <input type="text" id="userInput" name="userInput" placeholder="Ex: <script>alert('XSS')</script>">
+    <button type="submit">Enviar</button>
+  </form>
+
+  <h2>Resultado:</h2>
+  <div id="output"></div>
+
+  <script>
+    const form = document.getElementById('xssForm');
+    const output = document.getElementById('output');
+/*A versão não segura do código usaria innerHTML para renderizar a entrada do 
+usuário diretamente no DOM, permitindo que códigos maliciosos, sejam interpretados e executados.*/
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const userInput = document.getElementById('userInput').value;
+      // Renderização insegura no DOM 
+      output.innerHTML = `Você digitou: ${userInput}`;
+    });
+  </script>
+</body>
+</html>
